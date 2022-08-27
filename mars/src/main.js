@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import './assets/main.css'
-import './assets/fontello.css'
+import "./assets/fontello.css"
 import Datepicker from "vue3-datepicker";
 import mitt from 'mitt'
 import VueCryptojs from 'vue-cryptojs'

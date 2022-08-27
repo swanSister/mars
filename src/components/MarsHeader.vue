@@ -5,17 +5,17 @@ export default {
   },
   data(){
       return{
-          roverArray:['perseverance','curiosity','spirit','opportunity'],
+          roverList:['perseverance','curiosity','spirit','opportunity'],
           roverIndex:0,
       }
   },
   methods: {
     goLeft(){
-      this.roverIndex > 0 ? this.roverIndex-- : this.roverIndex = this.roverArray.length-1 
+      this.roverIndex > 0 ? this.roverIndex-- : this.roverIndex = this.roverList.length-1 
       this.emitter.emit('roverChange',this.roverIndex)
     },
     goRight(){
-      this.roverIndex < this.roverArray.length-1 ? this.roverIndex ++ : this.roverIndex = 0
+      this.roverIndex < this.roverList.length-1 ? this.roverIndex ++ : this.roverIndex = 0
       this.emitter.emit('roverChange',this.roverIndex)
     }
   },
@@ -31,7 +31,7 @@ export default {
     
     <div class="green">
       <span class="left-triangle" @click="goLeft"></span> 
-        {{roverArray[roverIndex]+" "}}
+        {{roverList[roverIndex]+" "}}
       <span class="right-triangle" @click="goRight"></span>
     </div>
     
@@ -42,7 +42,7 @@ export default {
 .green{
   font-weight:bold;
   font-size: 4vh;
-  line-height: 10vh;
+  line-height: 8vh;
   margin: auto auto;
   text-align: center;
   color:rgb(122,149,138);

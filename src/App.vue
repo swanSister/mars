@@ -1,11 +1,13 @@
 <script>
 import MarsHeader from './components/MarsHeader.vue'
 import MarsMain from './components/MarsMain.vue'
+import MarsFooter from './components/MarsFooter.vue'
 import Loading from './components/Loading.vue'
 export default {
   components:{
     MarsHeader,
     MarsMain,
+    MarsFooter,
     Loading
   },
   data(){
@@ -40,12 +42,15 @@ export default {
   <main>
     <MarsMain />
   </main>
+  <footer>
+     <MarsFooter/>
+  </footer>
 </template>
 
 <style scoped>
 header{
   position:absolute;
-  height:10vh;
+  height:8vh;
   top:0;
   left:0;
   right:0;
@@ -55,11 +60,17 @@ header{
 }
 main{
   position:absolute;
-  height:90vh;
-  top:10vh;
+  height:85vh;
+  top:8vh;
   left:0;
   right:0;
   bottom:0;
   overflow-y:hidden;
+}
+footer{
+  width:100%;
+  position: absolute;
+  bottom:0;
+  left:0;
 }
 </style>
