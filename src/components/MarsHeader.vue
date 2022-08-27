@@ -42,7 +42,7 @@ export default {
 .green{
   font-weight:bold;
   font-size: 4vh;
-  line-height: 8vh;
+  line-height: 7vh;
   margin: auto auto;
   text-align: center;
   color:rgb(122,149,138);

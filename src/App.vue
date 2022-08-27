@@ -50,7 +50,7 @@ export default {
 <style scoped>
 header{
   position:absolute;
-  height:8vh;
+  height:8%;
   top:0;
   left:0;
   right:0;
@@ -60,7 +60,7 @@ header{
 }
 main{
   position:absolute;
-  height:85vh;
+  height:84%;
   top:8vh;
   left:0;
   right:0;
@@ -69,6 +69,7 @@ main{
 }
 footer{
   width:100%;
+  height:8%;
   position: absolute;
   bottom:0;
   left:0;
