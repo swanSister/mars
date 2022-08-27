@@ -8,8 +8,9 @@ export default {
 <template>
   <div class="loading">
     <div class="circle"></div>
-    <span @click="$emit('closePopup')" class="close-btn icon-cancel"></span>
+    
     <img :src="src"/>
+    <span @click="$emit('closePopup')" class="close-btn icon-cancel"></span>
   </div>
 </template>
 

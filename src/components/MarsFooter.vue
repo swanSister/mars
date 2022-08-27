@@ -26,6 +26,7 @@ export default {
 
 <style scoped>
 .footer{
+  z-index:1;
   font-size: 2vh;
   padding:1vh 2vh;
   height:100%;

@@ -180,7 +180,7 @@ export default {
     <span :class="{'arrow arrow-up':cameraListShow,'arrow arrow-down':!cameraListShow, }" @click="marsListHeightUpdate"></span>
   </div>
   <div v-if="cameraListShow" class="camera-selector" ref="cameraSelector">
-    <div class="camera-info">*{{cameraInfo}}</div>
+    <div class="camera-info"><span class="icon-camera"></span>{{cameraInfo}}</div>
     <span v-for="(c,i) in cameraList"  v-bind:key="c.name + i" :class="{'selected':c.name==camera}" @click="selectCamera(c)">
       {{c.name}}
     </span>
@@ -203,15 +203,20 @@ export default {
   height:5vh;
 }
 .camera-selector{
+  z-index: 2;
   font-size: 2vh;
-  padding:1vh 2vh;
+  padding:0 2vh 1vh 2vh;
   border-bottom:1px solid rgb(122,149,138);
   height:auto;
   overflow: scroll;
 }
 .camera-info{
-  margin-top:1vh;
-  color:red;
+  color:rgb(122,149,138);
+  font-weight: bold;
+}
+.camera-info > span{
+  margin-right:1vh;
+  color:rgb(122,149,138);
 }
 .v3dp__datepicker{
   display: inline-block;
@@ -221,7 +226,6 @@ export default {
 }
 .camera-selector > span{
   display: inline-block;
-  margin-top:1vh;
   margin-right: 1vh;
 }
 .camera-selector > span.selected{
