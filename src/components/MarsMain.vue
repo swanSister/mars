@@ -186,6 +186,8 @@ export default {
     </span>
   </div>
   <ul ref="marsList" v-on:scroll="handleScroll" >
+    <div v-if="!marsArray.length" class="no-data">
+      <span class="icon-cancel"></span> 촬영 사진이 없습니다. </div>
     <li v-for="(mars,i) in marsArray"  v-bind:key="mars + i" >
       <span class="idx">{{i+1}}/{{marsArray.length + marsDataCopy.length}}</span>
       <span class="name">{{mars.id}}</span>
@@ -223,6 +225,11 @@ export default {
 }
 .date-picker{
   border-color:rgb(122,149,138);
+}
+.no-data{
+  font-size: 2vh;
+  font-weight: bold;
+  color:rgb(195, 77, 77);
 }
 .camera-selector > span{
   display: inline-block;
