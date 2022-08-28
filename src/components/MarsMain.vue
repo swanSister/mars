@@ -5,8 +5,8 @@ import imagePopup from './imagePopup.vue'
 export default {
   setup() {
     return {
-      count:10,
-      countDiff:10,
+      count:12,
+      countDiff:12,
       cameraListShow:true,
       marsArray:[],
       marsDataCopy:[],
@@ -242,13 +242,15 @@ export default {
   color:rgb(122,149,138);
 }
 ul{
-  display:block;
+  display: flex;
+  flex-wrap: wrap;
   width:100%;
   overflow-y:scroll;
   padding:3vh;
   margin:0;
 }
 ul li{
+  width:50%;
   padding:2vh 2vh 2vh 0;
   font-size: 3vh;
   border-bottom:1px solid rgba(0,0,0,0.5);
@@ -270,7 +272,10 @@ ul li .idx{
   
 }
 ul li .name{
- margin-left: 1vh;
+  font-size: 2vh;
+  height:4vh;
+  line-height:4vh;
+  margin-left: 1vh;
 }
 ul li .image{
  margin-top: 2vh;
@@ -322,7 +327,7 @@ width:80%;
   border-bottom:2vh solid rgb(122,149,138);
 }
 
-@media (min-width: 300px) {
+@media (min-width: 1200px) {
   ul{
     display: flex;
     flex-wrap: wrap;
