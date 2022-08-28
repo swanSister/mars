@@ -321,4 +321,14 @@ width:80%;
   border-right:1.5vh solid transparent;
   border-bottom:2vh solid rgb(122,149,138);
 }
+
+@media (min-width: 300px) {
+  ul{
+    display: flex;
+    flex-wrap: wrap;
+  }
+  ul li{
+    width:33%;
+  }
+}
 </style>
