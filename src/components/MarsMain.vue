@@ -22,6 +22,7 @@ export default {
       roverIndex:0,
       cameraSelectorHeight:0,
       imagePopupSrc:'',
+      imagePopupIndex:0,
       isImagePopupShow:false,
     }
   },
@@ -151,7 +152,8 @@ export default {
       }
     
     },
-    showImagePopup(src){
+    showImagePopup(src,i){
+      this.imagePopupIndex = i
       this.imagePopupSrc = src
       console.log(this.imagePopupSrc)
       this.isImagePopupShow = true
@@ -160,6 +162,20 @@ export default {
     closeImagePopup(){
       this.imagePopupSrc = ''
       this.isImagePopupShow = false
+      this.$forceUpdate()
+    },
+    showLeft(){
+      if(this.imagePopupIndex > 0){
+        this.imagePopupIndex --
+      }
+      this.imagePopupSrc = this.marsArray[this.imagePopupIndex].img_src
+      this.$forceUpdate()
+    },
+    showRight(){
+      if(this.imagePopupIndex < this.marsArray.length-1){
+        this.imagePopupIndex ++
+      }
+      this.imagePopupSrc = this.marsArray[this.imagePopupIndex].img_src
       this.$forceUpdate()
     }
   },
@@ -172,8 +188,6 @@ export default {
   }
 }
 </script>
-
-
 <template>
   <div class="date-selector">
     <span class="search-icon icon-search"></span> <Datepicker :upperLimit="dateTo" :lowerLimit="dateFrom" class="date-picker" v-model="date" @update:modelValue="handlOnBlur"/>
@@ -192,11 +206,12 @@ export default {
       <span class="idx">{{i+1}}/{{marsArray.length + marsDataCopy.length}}</span>
       <span class="name">{{mars.id}}</span>
       <div>
-        <img class="image" :src="mars.img_src" @click="showImagePopup(mars.img_src)">
+        <img class="image" :src="mars.img_src" @click="showImagePopup(mars.img_src,i)">
       </div>
     </li>
  </ul>
- <imagePopup v-if="isImagePopupShow"  :src="imagePopupSrc" @closePopup="closeImagePopup"/>
+ <imagePopup v-if="isImagePopupShow"  :src="imagePopupSrc" :length="marsArray.length" :idx="imagePopupIndex"
+ @closePopup="closeImagePopup" @showLeft="showLeft" @showRight="showRight"/>
 </template>
 
 <style scoped>

@@ -1,15 +1,19 @@
 <script>
 export default {
   props : {
-    src : String
+    src : String,
+    length : Number,
+    idx : Number
   } 
 }
 </script>
 <template>
   <div class="loading">
     <div class="circle"></div>
-    
     <img :src="src"/>
+    {{idx}},{{length}}
+    <span v-if="idx > 0" @click="$emit('showLeft')" class="arrow-left icon-left-open"></span>
+    <span v-if="idx < length-2" @click="$emit('showRight')" class="arrow-right icon-right-open"></span>
     <span @click="$emit('closePopup')" class="close-btn icon-cancel"></span>
   </div>
 </template>
@@ -62,5 +66,21 @@ img{
   animation-timing-function: linear;
   animation-duration:.8s;
   animation-iteration-count:infinite;
+}
+.arrow-left{
+  position:fixed;
+  left:2vh;
+  top:50%;
+  font-size: 3vh;
+  color:white;
+  transform:translate(-50%, -50%);
+}
+.arrow-right{
+  position:fixed;
+  right:2vh;
+  font-size: 3vh;
+  top:50%;
+  color:white;
+  transform:translate(-50%, -50%);
 }
 </style>
