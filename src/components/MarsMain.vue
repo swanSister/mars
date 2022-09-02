@@ -13,7 +13,6 @@ export default {
       date:new Date(),
       dateTo:'',
       dateFrom:'',
-      cameraExceptions:['EDL_RUCAM','EDL_DDCAM','EDL_PUCAM1','EDL_PUCAM2','MCZ_RIGHT','MCZ_LEFT','SHERLOC_WATSON','EDL_RDCAM'],
       cameraList:[],
       camera:'',
       cameraInfo:'',
@@ -36,7 +35,12 @@ export default {
     getPhotoUrl(){
       var url = 'https://api.nasa.gov/mars-photos/api/v1/rovers/' + this.roverList[this.roverIndex] + '/photos?api_key=0wBaZcU48NCSsfz6V6MoixgbE2pVHNtnJhqCgH5o'
       var date = this.getDateFormat(this.date)
-      return url+'&earth_date='+date + '&camera='+this.camera
+      if(this.isSearchAll){
+         return url+'&camera='+this.camera
+      }else{
+         return url+'&earth_date='+date + '&camera='+this.camera
+      }
+     
     },
     getDateFormat(dt){
       var year = dt.getFullYear();
@@ -57,7 +61,7 @@ export default {
       this.marsArray = this.marsArray.concat(this.marsDataCopy.splice(0,this.countDiff))
       this.$forceUpdate()
 
-      var that = this
+      var that = this           
       setTimeout(() => {
          that.emitter.emit('hideLoading')
       },1000)
@@ -79,7 +83,7 @@ export default {
     getImage(){
       this.emitter.emit('showLoading')
       this.marsDataCopy = []
-        
+      this.marsArray = []
       console.log(this.getPhotoUrl())
       axios
         .get(this.getPhotoUrl())
@@ -114,13 +118,6 @@ export default {
         this.dateFrom = new Date(response.data.rover.landing_date)
         this.date = this.dateTo
         console.log(response.data.rover)
-        for(var i in this.cameraExceptions){
-            for(var j =this.cameraList.length - 1; j>=0; j--){
-              if(this.cameraExceptions[i] == this.cameraList[j].name){
-                this.cameraList.splice(j,1)
-              }
-          }
-        }
         if(this.cameraList[0]){
           this.camera = this.cameraList[0].name
           this.cameraInfo = this.cameraList[0].full_name
@@ -131,7 +128,6 @@ export default {
       )
     },
     marsListHeightUpdate(){
-      
       if(this.cameraListShow){
         this.cameraSelectorHeight = this.$refs.cameraSelector.offsetHeight
         this.$refs.marsList.setAttribute(`style`,`height:calc(100% - 5vh)`)
@@ -148,7 +144,6 @@ export default {
             this.$refs.marsList.setAttribute(`style`,`height:calc(100% - 5vh - ${this.cameraSelectorHeight}px)`)
            }
           },300)
-        
       }
     
     },
@@ -177,6 +172,15 @@ export default {
       }
       this.imagePopupSrc = this.marsArray[this.imagePopupIndex].img_src
       this.$forceUpdate()
+    },
+    selectDay(dir){
+      if(dir=='right'){
+        this.date = new Date(this.date.setDate(this.date.getDate()+1))
+      }else{
+        this.date = new Date(this.date.setDate(this.date.getDate()-1))
+      }
+      this.getImage()
+      this.$forceUpdate()
     }
   },
   mounted() {
@@ -190,7 +194,11 @@ export default {
 </script>
 <template>
   <div class="date-selector">
-    <span class="search-icon icon-search"></span> <Datepicker :upperLimit="dateTo" :lowerLimit="dateFrom" class="date-picker" v-model="date" @update:modelValue="handlOnBlur"/>
+    <span @click="selectDay('left')" v-if="dateFrom<date" class="select-date-icon icon-left-open"></span> 
+    <Datepicker 
+    :style="{'height': '4vh','padding':'1vh','border':'1px solid rgb(122,149,138)','margin':'0 1vh'}"
+    :upperLimit="dateTo" :lowerLimit="dateFrom" class="date-picker" v-model="date" @update:modelValue="handlOnBlur"/>
+    <span @click="selectDay('right')" v-if="date<dateTo" class="select-date-icon icon-right-open"></span>
     <span :class="{'arrow arrow-up':cameraListShow,'arrow arrow-down':!cameraListShow, }" @click="marsListHeightUpdate"></span>
   </div>
   <div v-if="cameraListShow" class="camera-selector" ref="cameraSelector">
@@ -215,9 +223,11 @@ export default {
 </template>
 
 <style scoped>
-.date-selector{
-  padding:1vh 2vh 0 2vh;
+
+.date-selector, .date-selector > div{
   height:5vh;
+  line-height:5vh;
+  text-align: center;
 }
 .camera-selector{
   z-index: 2;
@@ -228,18 +238,25 @@ export default {
   overflow: scroll;
 }
 .camera-info{
+  
   color:rgb(122,149,138);
   font-weight: bold;
+}
+.select-all-period{
+  color:rgb(122,149,138);
+  font-weight: bold;
+  margin-left: 2vh;
 }
 .camera-info > span{
   margin-right:1vh;
   color:rgb(122,149,138);
+  
 }
 .v3dp__datepicker{
   display: inline-block;
 }
-.date-picker{
-  border-color:rgb(122,149,138);
+.v3dp__datepicker input:read-only{
+  border:none;
 }
 .no-data{
   font-size: 2vh;
@@ -249,12 +266,20 @@ export default {
 .camera-selector > span{
   display: inline-block;
   margin-right: 1vh;
+  border: 1px solid rgba(0,0,0,0.2);
+  color:rgb(122,149,138);
+  padding: 0 0.8vh;
+  margin: 0.5vh;
 }
 .camera-selector > span.selected{
   font-weight: bold;
+  border-color: rgb(122,149,138);
+  background-color:rgb(122,149,138);
+  color:white;
 }
-.search-icon{
+.select-date-icon{
   color:rgb(122,149,138);
+  font-size:2vh;
 }
 ul{
   display: flex;

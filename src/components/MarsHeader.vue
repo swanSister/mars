@@ -30,9 +30,9 @@ export default {
   <div>
     
     <div class="green">
-      <span class="left-triangle" @click="goLeft"></span> 
-        {{roverList[roverIndex]+" "}}
-      <span class="right-triangle" @click="goRight"></span>
+      <span class="left icon-left-open" @click="goLeft"></span> 
+      <span class="title">{{roverList[roverIndex]+" "}}</span>
+      <span class="right icon-right-open" @click="goRight"></span>
     </div>
     
   </div>
@@ -40,33 +40,28 @@ export default {
 
 <style scoped>
 .green{
-  font-weight:bold;
   font-size: 4vh;
   line-height: 7vh;
   margin: auto auto;
   text-align: center;
   color:rgb(122,149,138);
 }
-.left-triangle{
-  width: 0;
-  height: 0;
-  border-bottom: 2vh solid transparent;
-  border-top: 2vh solid transparent;
-  border-left: 2vh solid transparent;
-  border-right: 2vh solid rgb(122,149,138);
-  font-size: 0;
-  vertical-align: middle;
-  margin-right: 2vh;
+.green .title{
+  font-weight:bold;
+  min-width:60vw;
+  display: inline-block;
 }
-.right-triangle{
-  width: 0;
-  height: 0;
-  border-bottom: 2vh solid transparent;
-  border-top: 2vh solid transparent;
-  border-left: 2vh solid rgb(122,149,138);
-  border-right: 2vh solid transparent;
-  font-size: 0;
-  vertical-align: middle;
-  margin-left: 2vh;
+.left, .right{
+  font-size: 3vh;
+  font-weight: normal;
 }
+
+@media (min-width: 1024px) {
+  .green .title{
+  font-weight:bold;
+  min-width:60vh;
+  display: inline-block;
+  }
+}
+
 </style>

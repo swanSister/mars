@@ -13,7 +13,7 @@ export default {
     <img :src="src"/>
     {{idx}},{{length}}
     <span v-if="idx > 0" @click="$emit('showLeft')" class="arrow-left icon-left-open"></span>
-    <span v-if="idx < length-2" @click="$emit('showRight')" class="arrow-right icon-right-open"></span>
+    <span v-if="idx < length-1" @click="$emit('showRight')" class="arrow-right icon-right-open"></span>
     <span @click="$emit('closePopup')" class="close-btn icon-cancel"></span>
   </div>
 </template>
@@ -81,6 +81,6 @@ img{
   font-size: 3vh;
   top:50%;
   color:white;
-  transform:translate(-50%, -50%);
+  transform:translate(50%, -50%);
 }
 </style>
