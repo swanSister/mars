@@ -10,12 +10,12 @@ export default {
       cameraListShow:true,
       marsArray:[],
       marsDataCopy:[],
-      date:new Date(),
+      date:new Date('2022-09-05'),
       dateTo:'',
       dateFrom:'',
       cameraList:[],
-      camera:'',
-      cameraInfo:'',
+      camera:'NAVCAM_LEFT',
+      cameraInfo:'Navigation Camera - Left',
       sol:null,
       roverList:['perseverance','curiosity','spirit','opportunity'],
       roverIndex:0,
@@ -105,20 +105,23 @@ export default {
         }   
       )
     },
-    getRoverInfo(){
+    getRoverInfo(isStart){
       this.emitter.emit('showLoading')
+      
       this.cameraList = []
-      this.camera = ''
-      this.cameraInfo = ''
+      if(!isStart){
+        this.camera = ''
+        this.cameraInfo = ''
+      }
       axios
       .get(this.getRoverUrl())
       .then(response => {
         this.cameraList = response.data.rover.cameras
         this.dateTo = new Date(response.data.rover.max_date)
         this.dateFrom = new Date(response.data.rover.landing_date)
-        this.date = this.dateTo
+        
         console.log(response.data.rover)
-        if(this.cameraList[0]){
+        if(this.cameraList[0] && !isStart){
           this.camera = this.cameraList[0].name
           this.cameraInfo = this.cameraList[0].full_name
         }
@@ -185,7 +188,7 @@ export default {
   },
   mounted() {
     this.emitter.emit('showLoading')
-    this.getRoverInfo()
+    this.getRoverInfo(true)
     this.getImage()
     this.emitter.on('roverChange',this.roverChange)
      console.log("########",this.cameraListShow)
@@ -209,7 +212,7 @@ export default {
   </div>
   <ul ref="marsList" v-on:scroll="handleScroll" >
     <div v-if="!marsArray.length" class="no-data">
-      <span class="icon-cancel"></span> 촬영 사진이 없습니다. </div>
+      <span class="icon-cancel"></span> No data. Please select a different date.</div>
     <li v-for="(mars,i) in marsArray"  v-bind:key="mars + i" >
       <span class="idx">{{i+1}}/{{marsArray.length + marsDataCopy.length}}</span>
       <span class="name">{{mars.id}}</span>
