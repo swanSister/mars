@@ -119,7 +119,7 @@ export default {
         this.cameraList = response.data.rover.cameras
         this.dateTo = new Date(response.data.rover.max_date)
         if(!isStart){
-          this.date = this.dateTo
+          this.date = new Date(response.data.rover.max_date)
         }
         this.dateFrom = new Date(response.data.rover.landing_date)
         
