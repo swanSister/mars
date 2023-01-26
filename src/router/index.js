@@ -1,14 +1,9 @@
-import { createWebHistory, createRouter } from 'vue-router'
+import { createWebHashHistory, createRouter } from 'vue-router'
 import MarsMain from '../pages/MarsMain.vue'
 import Swanne from '../pages/Swanne.vue'
 
 const routes = [
-  {
-    path: '/',
-    name: 'mars',
-    component: MarsMain,
-   
-  },
+
   {
     path: '/mars',
     name: 'mars',
@@ -16,14 +11,14 @@ const routes = [
     
   },
   {
-    path: '/Swanne',
+    path: '/swanne',
     name: 'swanne',
     component: Swanne
   }
 ]
 
 const router = createRouter({
-    history: createWebHistory(),
+    history: createWebHashHistory(),
     routes
 })
 
