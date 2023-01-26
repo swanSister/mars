@@ -1,7 +1,10 @@
 <script>
 import { ref } from 'vue'
 import axios from 'axios'
-import imagePopup from './imagePopup.vue'
+import imagePopup from '../components/imagePopup.vue'
+import MarsHeader from '../components/MarsHeader.vue'
+import MarsFooter from '../components/MarsFooter.vue'
+
 export default {
   setup() {
     return {
@@ -26,7 +29,9 @@ export default {
     }
   },
   components:{
-   imagePopup
+   imagePopup,
+   MarsHeader,
+   MarsFooter
   },
   methods: {
     getRoverUrl(){
@@ -190,6 +195,7 @@ export default {
     }
   },
   mounted() {
+    console.log("mounted")
     this.emitter.emit('showLoading')
     this.getRoverInfo(true)
     this.getImage()
@@ -199,37 +205,73 @@ export default {
 }
 </script>
 <template>
-  <div class="date-selector">
-    <span @click="selectDay('left')" v-if="dateFrom<date" class="select-date-icon icon-left-open"></span> 
-    <Datepicker 
-    :style="{'height': '4vh','padding':'1vh','border':'1px solid rgb(122,149,138)','margin':'0 1vh'}"
-    :upperLimit="dateTo" :lowerLimit="dateFrom" class="date-picker" v-model="date" @update:modelValue="handlOnBlur"/>
-    <span @click="selectDay('right')" v-if="date<dateTo" class="select-date-icon icon-right-open"></span>
-    <span :class="{'arrow arrow-up':cameraListShow,'arrow arrow-down':!cameraListShow, }" @click="marsListHeightUpdate"></span>
-  </div>
-  <div v-if="cameraListShow" class="camera-selector" ref="cameraSelector">
-    <div class="camera-info"><span class="icon-camera"></span>{{cameraInfo}}</div>
-    <span v-for="(c,i) in cameraList"  v-bind:key="c.name + i" :class="{'selected':c.name==camera}" @click="selectCamera(c)">
-      {{c.name}}
-    </span>
-  </div>
-  <ul ref="marsList" v-on:scroll="handleScroll" >
-    <div v-if="!marsArray.length" class="no-data">
-      <span class="icon-cancel"></span> No data. Please select a different date.</div>
-    <li v-for="(mars,i) in marsArray"  v-bind:key="mars + i" >
-      <span class="idx">{{i+1}}/{{marsArray.length + marsDataCopy.length}}</span>
-      <span class="name">{{mars.id}}</span>
-      <div>
-        <img class="image" :src="mars.img_src" @click="showImagePopup(mars.img_src,i)">
-      </div>
-    </li>
- </ul>
+  <header>
+   <MarsHeader/>
+  </header>
+  <main>
+    <div class="date-selector">
+      <span @click="selectDay('left')" v-if="dateFrom<date" class="select-date-icon icon-left-open"></span> 
+      <Datepicker 
+      :style="{'height': '4vh','padding':'1vh','border':'1px solid rgb(122,149,138)','margin':'0 1vh'}"
+      :upperLimit="dateTo" :lowerLimit="dateFrom" class="date-picker" v-model="date" @update:modelValue="handlOnBlur"/>
+      <span @click="selectDay('right')" v-if="date<dateTo" class="select-date-icon icon-right-open"></span>
+      <span :class="{'arrow arrow-up':cameraListShow,'arrow arrow-down':!cameraListShow, }" @click="marsListHeightUpdate"></span>
+    </div>
+    <div v-if="cameraListShow" class="camera-selector" ref="cameraSelector">
+      <div class="camera-info"><span class="icon-camera"></span>{{cameraInfo}}</div>
+      <span v-for="(c,i) in cameraList"  v-bind:key="c.name + i" :class="{'selected':c.name==camera}" @click="selectCamera(c)">
+        {{c.name}}
+      </span>
+    </div>
+    <ul ref="marsList" v-on:scroll="handleScroll" >
+      <div v-if="!marsArray.length" class="no-data">
+        <span class="icon-cancel"></span> No data. Please select a different date.</div>
+      <li v-for="(mars,i) in marsArray"  v-bind:key="mars + i" >
+        <span class="idx">{{i+1}}/{{marsArray.length + marsDataCopy.length}}</span>
+        <span class="name">{{mars.id}}</span>
+        <div>
+          <img class="image" :src="mars.img_src" @click="showImagePopup(mars.img_src,i)">
+        </div>
+      </li>
+  </ul>
+</main>
+  
+  <footer>
+     <MarsFooter/>
+  </footer>
+
+
  <imagePopup v-if="isImagePopupShow"  :src="imagePopupSrc" :length="marsArray.length" :idx="imagePopupIndex"
  @closePopup="closeImagePopup" @showLeft="showLeft" @showRight="showRight"/>
 </template>
 
 <style scoped>
-
+header{
+  position:absolute;
+  height:8%;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  border-bottom: 1px solid rgb(122,149,138);
+  color:rgba(0,0,0,.7);
+}
+main{
+  position:absolute;
+  height:84%;
+  top:8vh;
+  left:0;
+  right:0;
+  bottom:0;
+  overflow-y:hidden;
+}
+footer{
+  width:100%;
+  height:8%;
+  position: absolute;
+  bottom:0;
+  left:0;
+}
 .date-selector, .date-selector > div{
   height:5vh;
   line-height:5vh;
