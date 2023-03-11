@@ -5,6 +5,12 @@ import Swanne from '../pages/Swanne.vue'
 const routes = [
 
   {
+    path: '/',
+    name: 'mars',
+    component: MarsMain,
+    
+  },
+  {
     path: '/mars',
     name: 'mars',
     component: MarsMain,

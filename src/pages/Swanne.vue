@@ -13,7 +13,7 @@ export default {
   },
   methods: {
    goToShop(){
-    window.location.href = 'https://smartstore.naver.com/swan_charles/products/7970744484'
+    window.location.href = 'https://smartstore.naver.com/swan_charles'
    }
   },
   mounted() {
@@ -53,8 +53,11 @@ footer{
   left:0;
 }
 button{
+  width:100%;
   background-color:white;
-
+  border:1px solid;
+  font-size: 3vh;
+  color:black;
 }
 
 @media (min-width: 1200px) {
